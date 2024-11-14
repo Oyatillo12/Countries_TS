@@ -23,13 +23,14 @@ export const Context = createContext<ContextType>({
 
 const CountriesProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     const [countries, setCountries] = useState<CountriesType[]>([]);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<boolean>(true);
     const [refresh, setRefresh] = useState<boolean>(false);
 
     useEffect(() => {
         async function getCountries(): Promise<void> {
             try {
                 const res: any = await axios.get("https://restcountries.com/v3.1/all");
+                setLoading(false);
                 setCountries(res.data.slice(0, 20).map((item: any) => {
                     const data: CountriesType = {
                         name: item.name.common,
